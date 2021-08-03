@@ -12,18 +12,14 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.Data;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
- @Entity
- @Table(name = "reply")
- @NoArgsConstructor(access = AccessLevel.PROTECTED)
- @EntityListeners(AuditingEntityListener.class)
- @Getter 
-public class Reply {
+@Data
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "reply")
+public class ReplyEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="rid")
@@ -46,13 +42,5 @@ public class Reply {
         this.bid = bid;
     }
 
-    @Builder
-    public Reply(Long rid, String rname, String rcontent , Long bid) {
-        this.rid = rid;
-        this.rname = rname;
-        this.rcontent = rcontent;
-        this.bid = bid;
-    
-}
 
 }

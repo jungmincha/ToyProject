@@ -1,8 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
+    </head>
         <body>
             <h2>hello world</h2>
         </body>
-    </head>
+
+        <script>
+
+const axios = require('axios');
+
+const getBreeds = async () => {
+  try {
+    return await axios.get('localhost:8080/board');
+    
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
+        </script>
+    
 </html>

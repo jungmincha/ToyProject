@@ -8,12 +8,12 @@
       <div class='profileArea'>
 
         <div class='writer'>
-          {{ boardDetail.bname }}
+          {{ boardDetail.bname}}
         </div>
 
         <div class='articleInfo'>
           <div class='date'>
-            {{ boardDetail.bdate }}
+            {{ boardDetail.bdate}}
           </div>
           <div class='count'>
             조회수 {{ boardDetail.bhit }}
@@ -81,16 +81,22 @@ import ReplyItem from '~/components/organisms/ReplyItem'
 export default {
   components: {ReplyItem},
   async asyncData({params}) {
-    const boardDetail = await axios.get(`http://localhost:8080/board/${params.bid}`)
+
+    const {data : boardDetail} = await axios.get(`http://localhost:8080/board/${params.bid}`)
     .then(res => {
+      if(res.data.code ==='S'){
       console.log("boardDetail : ", res.data);
+      };
       return res.data;
     })
     .catch(e => {
       console.error(e);
     });
 
-    const replyList = await axios.get(`http://localhost:8080/board/comments/${params.bid}`).then(res => {
+    const {data : replyList} = await axios.get(`http://localhost:8080/board/comments/${params.bid}`).then(res => {
+      if(res.data.code ==='S'){
+      console.log("replyList : " , res.data);
+      };
       return res.data;
     });
 
@@ -131,17 +137,23 @@ export default {
         rcontent : this.newReplyContent
       })
       .then(res => {
+        if(res.data.code === 'S'){
         this.newReplyName = "";
         this.newReplyContent = "";
+        console.log(this.boardDetail.bid);
+          
+
+        };
       })
       .catch(e => {
         console.error(e);
         return false;
       });
 
-      await axios.get(`http://localhost:8080/board/comments/${this.boardDetail.bid}`)
-      .then(res => {
+       await axios.get(`http://localhost:8080/board/comments/${this.boardDetail.bid}`)
+      .then(res=> {
         this.replyList = res.data;
+      //  console.log(res.data);
       });
 
       return false;
@@ -151,9 +163,11 @@ export default {
     },
     async reloadReplyList() {
       console.log("reloadReplyList")
-      await axios.get(`http://localhost:8080/board/comments/${this.boardDetail.bid}`)
+        await axios.get(`http://localhost:8080/board/comments/${this.boardDetail.bid}`)
         .then(res => {
           this.replyList = res.data;
+          console.log(res.data);
+         
         });
     }
 

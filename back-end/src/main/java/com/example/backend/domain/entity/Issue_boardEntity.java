@@ -10,17 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
+@Data
 @Entity
-@Table(name="issue_board")
-@NoArgsConstructor(access=AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@Getter
-public class Issue_board {
+@Table(name = "issue_board")
+public class Issue_boardEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "bid")
@@ -42,14 +38,6 @@ public class Issue_board {
     @Column(nullable = false)
     private int bhit;
 
-    @Builder
-    public Issue_board(Long bid, String btitle, String bname, String bcontent , int bhit) {
 
-        this.bid = bid;
-        this.btitle = btitle;
-        this.bname = bname;
-        this.bcontent = bcontent;
-        this.bhit = bhit;
-    }
    
 }

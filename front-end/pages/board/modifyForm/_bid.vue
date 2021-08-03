@@ -24,7 +24,7 @@ export default {
   async asyncData({params}) {
     return await axios.get(`http://localhost:8080/board/edit/${params.bid}`).then(res => {
       console.log("boardDetail : ", res.data);
-      const boardDetail = res.data;
+      const {data : boardDetail} = res.data;
 
       return {
         bid : boardDetail.bid,
@@ -50,7 +50,9 @@ export default {
         bname : this.bname,
         bcontent : this.bcontent
       }).then(res => {
-        this.$router.push("/board/" + this.bid);
+        if(res.data.code ==='S'){
+          this.$router.push("/board/" + this.bid);
+        };
       }).catch(e => {
       });
 

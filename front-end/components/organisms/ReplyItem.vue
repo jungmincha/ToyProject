@@ -25,7 +25,7 @@ import axios from 'axios'
 export default {
   name: 'ReplyItem',
   props   : {
-    reply: Object,
+  reply: Object.data,
   },
   data() {
     return {
@@ -44,6 +44,9 @@ export default {
       return await axios.delete(`http://localhost:8080/board/comments/${rid}`)
         .then(res => {
           this.$emit('reloadReplyList');
+
+          console.log(res.data);
+
         })
         .catch(e => {
           console.error(e);

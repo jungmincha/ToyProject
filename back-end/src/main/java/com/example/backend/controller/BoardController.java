@@ -1,9 +1,7 @@
 package com.example.backend.controller;
-
-import java.util.List;
-import com.example.backend.domain.entity.Issue_board;
-import com.example.backend.dto.IsBoardDto;
-import com.example.backend.dto.ReplyDto;
+import java.util.Map;
+import com.example.backend.domain.entity.Issue_boardEntity;
+import com.example.backend.domain.entity.ReplyEntity;
 import com.example.backend.service.BoardService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,46 +25,39 @@ public class BoardController {//test2
     private final BoardService boardService;
 
     @GetMapping("/board")//read boardList and paging
-    public Page<Issue_board> boardList(Pageable pageable){
+    public Page<Issue_boardEntity> boardList(Pageable pageable){
                                         
         log.info("boardList");
 
-        Page<Issue_board> isboard = boardService.boardList(pageable);
+        Page<Issue_boardEntity> isboard = boardService.boardList(pageable);
         
         return isboard;
 
     }
 
-    @GetMapping("/board/{bid}")//read content_view
-    public IsBoardDto contentView(@PathVariable("bid") Long bid) {
-
+    @GetMapping("/board/{bid}")//read content_view 리팩토링 완료
+    public Map<String , Object> contentView(@PathVariable("bid") Long bid) {
         log.info("contentView");
 
-        boardService.bhit(bid);
-
-        IsBoardDto isBoardDto = boardService.contentView(bid);
-
-        return isBoardDto;
+        return boardService.contentView(bid);
 
     }
 
-    @GetMapping("/board/edit/{bid}")//read modifyView
-    public IsBoardDto modifyView(@PathVariable("bid") Long bid) {
+    @GetMapping("/board/edit/{bid}")//read modifyView 리팩토링 완료
+    public Map<String , Object> modifyView(@PathVariable("bid") Long bid) {
 
         log.info("modifyView");
 
-        IsBoardDto isBoardDto = boardService.contentView(bid);
-
-        return isBoardDto;
+        return  boardService.modifyView(bid);
 
     }
 
-    @PostMapping("/board/write")//create board 
-    public void write(@RequestBody IsBoardDto isBoardDto){//@RequestBody return type json
+    @PostMapping("/board/write")//create board 리팩토링 완료
+    public Map<String , Object> write(@RequestBody Issue_boardEntity issue_boardEntity){//@RequestBody return type json
 
         log.info("write");
 
-        boardService.write(isBoardDto);
+       return boardService.write(issue_boardEntity);
 
     }
 
@@ -79,41 +70,39 @@ public class BoardController {//test2
         
     }
 
-    @PutMapping("/board/edit/{bid}")//update board
-    public void update(@PathVariable("bid")Long bid ,@RequestBody IsBoardDto isBoardDto){
+    @PutMapping("/board/edit/{bid}")//update board 리팩토링 완료
+    public Map<String , Object> update(@PathVariable("bid")Long bid ,@RequestBody Issue_boardEntity issue_boardEntity){
 
         log.info("update");
 
-        boardService.update(bid , isBoardDto);
+        return boardService.update(bid , issue_boardEntity);
 
     }
 
-    @GetMapping("/board/comments/{bid}")//read replyList
-    public List<ReplyDto> replyList(@PathVariable("bid") Long bid) {
+    @GetMapping("/board/comments/{bid}")//read replyList 리팩토링 완료
+    public Map<String , Object> replyList(@PathVariable("bid") Long bid) {
 
         log.info("reply");
 
-        List<ReplyDto> replyDto = boardService.replyList(bid);
-
-        return replyDto;
+        return boardService.replyList(bid);
         
     }
 
-    @PostMapping("/board/comments/{bid}")//create reply
-    public void reply(@PathVariable("bid") Long bid, @RequestBody ReplyDto replyDto){
+    @PostMapping("/board/comments/{bid}")//create reply 
+    public Map<String , Object>reply(@PathVariable("bid") Long bid, @RequestBody ReplyEntity replyEntity){
 
         log.info("reply");
 
-        boardService.reply(replyDto , bid);
+        return boardService.reply(replyEntity , bid);
 
     }
 
     @PutMapping("/board/comments/{bid}")//update reply
-    public void replyUpdate(@PathVariable("bid") Long bid, @RequestBody ReplyDto replyDto){
+    public Map<String , Object> replyUpdate(@PathVariable("bid") Long bid, @RequestBody ReplyEntity replyEntity){
 
         log.info("replyUpdate");
 
-        boardService.reply(replyDto , bid);
+       return boardService.reply(replyEntity , bid);
 
     }
 

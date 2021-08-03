@@ -34,6 +34,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      
       btitle : "",
       bname : "",
       bcontent : "",
@@ -47,7 +48,13 @@ export default {
         bname : this.bname,
         bcontent : this.bcontent
       }).then(res => {
-        this.$router.push("/board");
+
+        if(res.data.code ==='S'){
+          
+            this.$router.push("/board");
+        }
+        
+        
       }).catch(e => {
       });
 
