@@ -137,13 +137,12 @@ export default {
         rcontent : this.newReplyContent
       })
       .then(res => {
-        if(res.data.code === 'S'){
+       
         this.newReplyName = "";
         this.newReplyContent = "";
         console.log(this.boardDetail.bid);
-          
-
-        };
+        this.$router.push("/board/" + this.boardDetail.bid);
+      
       })
       .catch(e => {
         console.error(e);
