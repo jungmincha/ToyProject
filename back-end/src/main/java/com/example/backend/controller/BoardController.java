@@ -82,7 +82,7 @@ public class BoardController {//test2
     }
 
     @GetMapping("/board/comments/{bid}")//read replyList 리팩토링 완료
-    public List<ReplyEntity>replyList(@PathVariable("bid") Long bid) {
+    public Map<String, Object> replyList(@PathVariable("bid") Long bid) {
 
         log.info("reply");
 

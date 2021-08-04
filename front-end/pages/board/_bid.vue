@@ -93,7 +93,7 @@ export default {
       console.error(e);
     });
 
-    const replyList = await axios.get(`http://localhost:8080/board/comments/${params.bid}`)
+    const {newReply : replyList} = await axios.get(`http://localhost:8080/board/comments/${params.bid}`)
     .then(res => {
       
       console.log("그냥 replyList");
@@ -110,8 +110,9 @@ export default {
     return {
       newReplyName : "",
       newReplyContent: "",
+      data : {
       replyList : {}
-      
+      }
     }
   },
 
@@ -140,13 +141,8 @@ export default {
       }).then(res => {
        
         this.newReplyName = ""; 
-        // input box의 글자를 초기화 시켜준다
         this.newReplyContent = "";
 
-
-       
-     //   console.log(this.newReplyName);
-      //  this.$router.push("/board/" + this.boardDetail.bid);
       
       })
       .catch(e => {
@@ -158,7 +154,7 @@ export default {
       .then(res=> {
         console.log("test");
         console.log(res.data);
-        this.replyList = res.data;
+        this.replyList = res.data.newReply;
       });
          return false;
     },
@@ -171,7 +167,7 @@ export default {
          // this.data.replyList = res.data;
            console.log("reloadReplyList")
            console.log(res.data);
-           this.replyList=res.data;
+           this.replyList=res.data.newReply;
          
         });
     }

@@ -99,19 +99,19 @@ public class BoardService {
     }
 
   
-    public List<ReplyEntity>  replyList(Long bid) {//read replyList
+    public Map<String, Object> replyList(Long bid) {//read replyList
 
         log.info("transac-replyList");
 
-        //Map<String, Object> repMap = new HashMap<>();
+        Map<String, Object> repMap = new HashMap<>();
 
-        List<ReplyEntity> replyList = replyRepository.findByBoard_id(bid);
+       List<ReplyEntity> replyList = replyRepository.findByBoard_id(bid);
 
         //log.info(replyList);
 
-       // repMap.put("data", replyList);
+       repMap.put("newReply", replyList);
        
-        return replyList;
+        return repMap;
     }
 
     @Transactional
