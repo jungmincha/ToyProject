@@ -1,7 +1,10 @@
 package com.example.backend.controller;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import com.example.backend.domain.entity.Issue_boardEntity;
 import com.example.backend.domain.entity.ReplyEntity;
+import com.example.backend.dto.ReplyDto;
 import com.example.backend.service.BoardService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,18 +28,17 @@ public class BoardController {//test2
     private final BoardService boardService;
 
     @GetMapping("/board")//read boardList and paging
-    public Page<Issue_boardEntity> boardList(Pageable pageable){
+    public Map<String , Object> boardList(Pageable pageable){
                                         
         log.info("boardList");
-
-        Page<Issue_boardEntity> isboard = boardService.boardList(pageable);
         
-        return isboard;
+        return boardService.boardList(pageable);
 
     }
 
     @GetMapping("/board/{bid}")//read content_view 리팩토링 완료
     public Map<String , Object> contentView(@PathVariable("bid") Long bid) {
+        
         log.info("contentView");
 
         return boardService.contentView(bid);
@@ -80,29 +82,33 @@ public class BoardController {//test2
     }
 
     @GetMapping("/board/comments/{bid}")//read replyList 리팩토링 완료
-    public Map<String , Object> replyList(@PathVariable("bid") Long bid) {
+    public List<ReplyEntity>replyList(@PathVariable("bid") Long bid) {
 
         log.info("reply");
+
+       // List<ReplyEntity> replyList = new ArrayList<>();
+
+       // boardService.replyList(bid);
 
         return boardService.replyList(bid);
         
     }
 
     @PostMapping("/board/comments/{bid}")//create reply 
-    public Map<String , Object>reply(@PathVariable("bid") Long bid, @RequestBody ReplyEntity replyEntity){
+    public Map<String, Object> reply(@PathVariable("bid") Long bid, @RequestBody ReplyEntity replyEntity){
 
         log.info("reply");
 
-        return boardService.reply(replyEntity , bid);
+       return boardService.reply(replyEntity , bid);
 
     }
 
     @PutMapping("/board/comments/{bid}")//update reply
-    public Map<String , Object> replyUpdate(@PathVariable("bid") Long bid, @RequestBody ReplyEntity replyEntity){
+    public Map<String, Object>  replyUpdate(@PathVariable("bid") Long bid, @RequestBody ReplyEntity replyEntity){
 
         log.info("replyUpdate");
 
-       return boardService.reply(replyEntity , bid);
+      return boardService.reply(replyEntity , bid);
 
     }
 

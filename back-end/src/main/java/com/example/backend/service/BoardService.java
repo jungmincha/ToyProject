@@ -27,13 +27,17 @@ public class BoardService {
     private final ReplyRepository replyRepository;
 
     @Transactional
-    public Page<Issue_boardEntity> boardList(Pageable pageable) {//read boardList
+    public  Map<String , Object> boardList(Pageable pageable) {//read boardList
 
         log.info("transac-read");
 
+        Map<String , Object> hashMap = new HashMap<>();
+
         Page<Issue_boardEntity> boardPagingList = isBoardRepository.findAll(pageable);
 
-        return boardPagingList;
+        hashMap.put("list", boardPagingList);
+
+        return hashMap;
 
 }
 
@@ -57,18 +61,12 @@ public class BoardService {
         log.info("transac-content-read");
 
         Map<String , Object> ctvMap = new HashMap<>();
-        try{
 
             Optional<Issue_boardEntity> isBoardDetail = isBoardRepository.findById(bid);
             isBoardRepository.uphit(bid);
 
-            ctvMap.put("code", "S");
             ctvMap.put("data", isBoardDetail);
 
-        }catch(Exception ex){
-            ctvMap.put("code", "F");
-            ctvMap.put("msg", ex.getMessage());
-        }
          return ctvMap;
 
     }
@@ -101,24 +99,27 @@ public class BoardService {
     }
 
   
-    public Map<String , Object> replyList(Long bid) {//read replyList
+    public List<ReplyEntity>  replyList(Long bid) {//read replyList
 
         log.info("transac-replyList");
 
-        Map<String, Object> repMap = new HashMap<>();
+        //Map<String, Object> repMap = new HashMap<>();
 
         List<ReplyEntity> replyList = replyRepository.findByBoard_id(bid);
 
-        repMap.put("code", "S");
-        repMap.put("data", replyList);
+        //log.info(replyList);
+
+       // repMap.put("data", replyList);
        
-        return repMap;
+        return replyList;
     }
 
     @Transactional
-    public Map<String , Object> reply(ReplyEntity replyEntity , Long bid) {//create or update reply
+    public Map<String, Object> reply(ReplyEntity replyEntity , Long bid) {//create or update reply
 
         Map<String , Object> repMap = new HashMap<>();
+
+
 
         log.info("transac-reply");
 

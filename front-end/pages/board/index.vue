@@ -70,21 +70,21 @@ export default {
 
     return await axios.get('http://localhost:8080' + `${route.fullPath}`).then(res => {
       return {
-        posts: res.data.content,
+        posts: res.data.list.content,
         pagingData : {
-          totalPage : res.data.totalPages,
-          curPageNumber : res.data.number + 1,
-          startPageNumber : (res.data.number + 1) - 4 >= 1 ? (res.data.number + 1) - 4 : 1,
+          totalPage : res.data.list.totalPages,
+          curPageNumber : res.data.list.number + 1,
+          startPageNumber : (res.data.list.number + 1) - 4 >= 1 ? (res.data.list.number + 1) - 4 : 1,
           endPageNumber : function() {
-            if((res.data.number + 1) + 4 <= 9){
-              return Math.min(9, res.data.totalPages);
+            if((res.data.list.number + 1) + 4 <= 9){
+              return Math.min(9, res.data.list.totalPages);
             }
-            return (res.data.number + 1) + 4 <=  res.data.totalPages ? (res.data.number + 1) + 4 : res.data.totalPages;
+            return (res.data.list.number + 1) + 4 <=  res.data.list.totalPages ? (res.data.list.number + 1) + 4 : res.data.list.totalPages;
           }(),
           // endPageNumber : (res.data.number + 1) + 4 <=  res.data.totalPages ? (res.data.number + 1) + 4 : res.data.totalPages,
-          sizeInPage : res.data.size,
-          first : res.data.first,
-          last : res.data.last,
+          sizeInPage : res.data.list.size,
+          first : res.data.list.first,
+          last : res.data.list.last,
         }
       }
     })
@@ -106,20 +106,20 @@ export default {
     async moveSpecificPage(route) {
       const fetchData = await axios.get('http://localhost:8080' + route.fullPath).then(res => {
         return {
-          posts: res.data.content,
+          posts: res.data.list.content,
           pagingData : {
-            totalPage : res.data.totalPages,
-            curPageNumber : res.data.number + 1,
-            startPageNumber : (res.data.number + 1) - 4 >= 1 ? (res.data.number + 1) - 4 : 1,
+            totalPage : res.data.list.totalPages,
+            curPageNumber : res.data.list.number + 1,
+            startPageNumber : (res.data.list.number + 1) - 4 >= 1 ? (res.data.list.number + 1) - 4 : 1,
             endPageNumber : function() {
-              if((res.data.number + 1) + 4 <= 9){
-                return Math.min(9, res.data.totalPages);
+              if((res.data.list.numbe + 1) + 4 <= 9){
+                return Math.min(9, res.data.list.totalPages);
               }
-              return (res.data.number + 1) + 4 <=  res.data.totalPages ? (res.data.number + 1) + 4 : res.data.totalPages;
+              return (res.data.list.number + 1) + 4 <=  res.data.list.totalPages ? (res.data.list.number + 1) + 4 : res.data.list.totalPages;
             }(),
-            sizeInPage : res.data.size,
-            first : res.data.first,
-            last : res.data.last,
+            sizeInPage : res.data.list.size,
+            first : res.data.list.first,
+            last : res.data.list.last,
           }
         }
       });

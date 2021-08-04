@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class='nameWrapper'>
-      <input v-model="nextName" :readonly='!modifying' class='nameInput'>
+      <input v-model="nextName" :readonly='!modifying' class='nameInput'><!--수정 용-->
     </div>
     <div class='contentWrapper'>
       <input v-model="nextContent" :readonly='!modifying' class='contentInput'>
@@ -25,7 +25,8 @@ import axios from 'axios'
 export default {
   name: 'ReplyItem',
   props   : {
-  reply: Object.data,
+  // eslint-disable-next-line vue/require-default-prop
+  reply: Object,
   },
   data() {
     return {
@@ -45,13 +46,15 @@ export default {
         .then(res => {
           this.$emit('reloadReplyList');
 
-          console.log(res.data);
+          console.log("deleteReply");
+         // console.log(res.data);
 
         })
         .catch(e => {
           console.error(e);
         });
     },
+    
     changeModifying() {
       this.modifying = !this.modifying;
     },

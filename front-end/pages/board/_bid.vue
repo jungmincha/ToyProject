@@ -1,22 +1,22 @@
 <template>
   <div class='componentRoot'>
     <h3 class='title'>
-      {{ boardDetail.btitle }}
+      {{ isBoardDetail.btitle }}
     </h3>
 
     <div class='writerArea'>
       <div class='profileArea'>
 
         <div class='writer'>
-          {{ boardDetail.bname}}
+          {{ isBoardDetail.bname}}
         </div>
 
         <div class='articleInfo'>
           <div class='date'>
-            {{ boardDetail.bdate}}
+            {{ isBoardDetail.bdate}}
           </div>
           <div class='count'>
-            조회수 {{ boardDetail.bhit }}
+            조회수 {{ isBoardDetail.bhit }}
           </div>
         </div>
       </div>
@@ -32,7 +32,7 @@
     <hr>
 
     <div class="contentReader">
-      {{ boardDetail.bcontent }}
+      {{ isBoardDetail.bcontent }}
     </div>
 
 
@@ -82,26 +82,28 @@ export default {
   components: {ReplyItem},
   async asyncData({params}) {
 
-    const {data : boardDetail} = await axios.get(`http://localhost:8080/board/${params.bid}`)
+    const {data : isBoardDetail} = await axios.get(`http://localhost:8080/board/${params.bid}`)
     .then(res => {
-      if(res.data.code ==='S'){
-      console.log("boardDetail : ", res.data);
-      };
+   
+      console.log(res.data);
+
       return res.data;
     })
     .catch(e => {
       console.error(e);
     });
 
-    const {data : replyList} = await axios.get(`http://localhost:8080/board/comments/${params.bid}`).then(res => {
-      if(res.data.code ==='S'){
-      console.log("replyList : " , res.data);
-      };
+    const replyList = await axios.get(`http://localhost:8080/board/comments/${params.bid}`)
+    .then(res => {
+      
+      console.log("그냥 replyList");
+      console.log(res.data);
+   
       return res.data;
     });
 
 
-    return { boardDetail, replyList };
+    return { isBoardDetail, replyList };
   },
 
   data() {
@@ -109,21 +111,21 @@ export default {
       newReplyName : "",
       newReplyContent: "",
       replyList : {}
-    };
+      
+    }
   },
-  computed: {
 
-  },
   methods: {
     boardUpdate() {
       console.log("boardUpdate");
-      console.log(this.boardDetail.bid);
-      console.log("/board/modifyForm/" + this.boardDetail.bid);
+      console.log(this.isBoardDetail.bid);
+      console.log("/board/modifyForm/" + this.isBoardDetail.bid);
 
-      return this.$router.push("/board/modifyForm/" + this.boardDetail.bid);
+      return this.$router.push("/board/modifyForm/" + this.isBoardDetail.bid);
     },
+ 
     async deleteBoard(){
-      return await axios.delete(`http://localhost:8080/board/${this.boardDetail.bid}`)
+      return await axios.delete(`http://localhost:8080/board/${this.isBoardDetail.bid}`)
       .then(res => {
         this.$router.push("/board");
       })
@@ -132,16 +134,19 @@ export default {
       });
     },
     async registNewReply() {
-      await axios.post(`http://localhost:8080/board/comments/${this.boardDetail.bid}`, {
+      await axios.post(`http://localhost:8080/board/comments/${this.isBoardDetail.bid}`, {
         rname : this.newReplyName,
         rcontent : this.newReplyContent
-      })
-      .then(res => {
+      }).then(res => {
        
-        this.newReplyName = "";
+        this.newReplyName = ""; 
+        // input box의 글자를 초기화 시켜준다
         this.newReplyContent = "";
-        console.log(this.boardDetail.bid);
-        this.$router.push("/board/" + this.boardDetail.bid);
+
+
+       
+     //   console.log(this.newReplyName);
+      //  this.$router.push("/board/" + this.boardDetail.bid);
       
       })
       .catch(e => {
@@ -149,23 +154,24 @@ export default {
         return false;
       });
 
-       await axios.get(`http://localhost:8080/board/comments/${this.boardDetail.bid}`)
+       await axios.get(`http://localhost:8080/board/comments/${this.isBoardDetail.bid}`)
       .then(res=> {
+        console.log("test");
+        console.log(res.data);
         this.replyList = res.data;
-      //  console.log(res.data);
       });
-
-      return false;
+         return false;
     },
     modifyReplyActive() {
 
     },
     async reloadReplyList() {
-      console.log("reloadReplyList")
-        await axios.get(`http://localhost:8080/board/comments/${this.boardDetail.bid}`)
+        await axios.get(`http://localhost:8080/board/comments/${this.isBoardDetail.bid}`)
         .then(res => {
-          this.replyList = res.data;
-          console.log(res.data);
+         // this.data.replyList = res.data;
+           console.log("reloadReplyList")
+           console.log(res.data);
+           this.replyList=res.data;
          
         });
     }
