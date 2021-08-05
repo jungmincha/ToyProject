@@ -1,16 +1,9 @@
-package com.example.backend.service;
-
+package com.example.backend.bbs;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.transaction.Transactional;
-import com.example.backend.domain.entity.Issue_boardEntity;
-import com.example.backend.domain.entity.ReplyEntity;
-import com.example.backend.domain.repository.IsBoardRepository;
-import com.example.backend.domain.repository.ReplyRepository;
-import com.example.backend.dto.ReplyDto;
-
+import com.example.backend.reply.ReplyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -98,51 +91,6 @@ public class BoardService {
 
     }
 
-  
-    public Map<String, Object> replyList(Long bid) {//read replyList
-
-        log.info("transac-replyList");
-
-        Map<String, Object> repMap = new HashMap<>();
-
-       List<ReplyEntity> replyList = replyRepository.findByBoard_id(bid);
-
-        //log.info(replyList);
-
-       repMap.put("newReply", replyList);
-       
-        return repMap;
-    }
-
-    @Transactional
-    public Map<String, Object> reply(ReplyEntity replyEntity , Long bid) {//create or update reply
-
-        Map<String , Object> repMap = new HashMap<>();
-
-
-
-        log.info("transac-reply");
-
-        replyEntity.setBid(bid);
-
-        ReplyEntity replySave = replyRepository.save(replyEntity);
-
-        repMap.put("data", replySave);
-
-        return repMap;
-
-    }
-
-    @Transactional
-    public void deleteComments(Long rid) {//delete comments
-
-        log.info("transac-deleteComments");
-
-        replyRepository.deleteById(rid);
-
-     
-
-    }
 
     @Transactional
     public void bhit(Long bid) {// up hit
@@ -170,17 +118,6 @@ public class BoardService {
         return updMap;
 
     }
-
-
-    // @Transactional
-    // public void update(IsBoardDto isBoardDto) {
-
-    //     log.info("transac-modify");
-
-    //     isBoardRepository.save(isBoardDto.toEntity()).getBid();
-    // }
-
-  
 
 
 }

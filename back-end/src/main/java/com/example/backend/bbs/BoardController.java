@@ -1,12 +1,10 @@
-package com.example.backend.controller;
-import java.util.ArrayList;
-import java.util.List;
+package com.example.backend.bbs;
+
 import java.util.Map;
-import com.example.backend.domain.entity.Issue_boardEntity;
-import com.example.backend.domain.entity.ReplyEntity;
-import com.example.backend.dto.ReplyDto;
-import com.example.backend.service.BoardService;
-import org.springframework.data.domain.Page;
+
+import com.example.backend.reply.ReplyEntity;
+import com.example.backend.reply.ReplyService;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +24,8 @@ import lombok.extern.log4j.Log4j2;
 public class BoardController {//test2
 
     private final BoardService boardService;
+
+    private final ReplyService replyService;
 
     @GetMapping("/board")//read boardList and paging
     public Map<String , Object> boardList(Pageable pageable){
@@ -90,7 +90,7 @@ public class BoardController {//test2
 
        // boardService.replyList(bid);
 
-        return boardService.replyList(bid);
+        return replyService.replyList(bid);
         
     }
 
@@ -99,7 +99,7 @@ public class BoardController {//test2
 
         log.info("reply");
 
-       return boardService.reply(replyEntity , bid);
+       return replyService.reply(replyEntity , bid);
 
     }
 
@@ -108,7 +108,7 @@ public class BoardController {//test2
 
         log.info("replyUpdate");
 
-      return boardService.reply(replyEntity , bid);
+      return replyService.reply(replyEntity , bid);
 
     }
 
@@ -117,7 +117,7 @@ public class BoardController {//test2
 
         log.info("replyDelete");
 
-        boardService.deleteComments(rid);
+        replyService.deleteComments(rid);
 
     }
     

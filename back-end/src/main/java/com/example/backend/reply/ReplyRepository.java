@@ -1,8 +1,8 @@
-package com.example.backend.domain.repository;
+package com.example.backend.reply;
 
 
 import java.util.List;
-import com.example.backend.domain.entity.ReplyEntity;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,7 +1,5 @@
-package com.example.backend.domain.repository;
+package com.example.backend.bbs;
 
-
-import com.example.backend.domain.entity.Issue_boardEntity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

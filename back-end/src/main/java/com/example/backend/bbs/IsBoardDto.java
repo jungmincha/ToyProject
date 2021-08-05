@@ -1,4 +1,4 @@
-package com.example.backend.dto;
+package com.example.backend.bbs;
 
 import java.time.LocalDateTime;
 import lombok.Data;
