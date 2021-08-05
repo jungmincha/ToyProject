@@ -1,9 +1,8 @@
 <template>
   <div class='componentRoot'>
     <div class='wrapContent'>
-      <img :src="require(`@/assets/img/welcomeimage.jpg`)" class='contentImage'/>
+      <img :src="require(`@/assets/img/okinawa.jpg`)" class='contentImage'/>
       <div class='contentText'>
-        <span> 커피 한잔 어떠세요? </span>
       </div>
     </div>
   </div>
