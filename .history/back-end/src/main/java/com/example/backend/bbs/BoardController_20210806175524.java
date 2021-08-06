@@ -21,7 +21,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class BoardController {//dev_jungmin practice practice git dddddddddddd test testtesttsttesttest
+public class BoardController {//dev_jungmin practice practice git dddddddddddd test testtest
 
     private final BoardService boardService;
 
